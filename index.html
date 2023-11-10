@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./assets/css/reset.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <title>Dog Breeds For You</title>
+        <link rel="icon" href="https://i1.sndcdn.com/artworks-t2WU7CqW5Zym6EGP-ggTdBQ-t500x500.jpg">
+    </head>
+
+    <!--
+        Set body height to viewport height, specify elements as flexbox going down columns.
+        We set viewport height here for the footer as we want to align it to the very bottom. Flexbox properties are necessary since this is a "flexbox" behavior.
+    -->
+    <body class="is-flex is-flex-direction-column is-fullheight">
+        <header class="block">
+            <h1 class="has-text-centered">Dog Breeds For You</h1>
+        </header>
+
+        <div id="rel" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+              <p>Did not recognize this dog breed. Please try again.</p>
+            </div>
+            <button id="modalButton" class="modal-close is-large" aria-label="close"></button>
+        </div>
+
+        <!-- Division for the search input box and search button-->
+        <div class="block columns is-mobile">
+            <!-- This empty column centers the columns, because is-centered wasn't working -->
+            <div class="column is-one-fifth"></div>
+            <div class="column is-half">
+                <input class="input" type="text" placeholder="Enter Dog Breed" id="breedInput" />
+            </div>
+            <div class="column">
+                <button class="button" id="searchButton">Search</button>
+            </div>
+        </div>
+
+        <!--
+            Main content with four cards containing information about the dog, and a fourth card with saved dog searches
+        -->
+        <main class="block">
+            <!--
+                is-multiline will move columns to next line, achieving a 2x2 layout.
+                I chose this over making two columns because i wanted order to be preserved when resizing to mobile.
+            -->
+            <div class="columns is-multiline">
+                <!--
+                    is-offset-1 adds a spacing to the beginning, because bulma specifies columns in "12" segments.
+                    First card that simply displays an image of the searched dog.
+                -->
+                <div class="column is-offset-1 is-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title is-centered">Dog Image</p>
+                        </div>
+                        <div class="card-image">
+                            <!-- Calculated ratio to always be 3/2 from the API, so this is a safe assumption -->
+                            <figure class="image is-3by2" id="dogImageBox">
+                                <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg" alt="cute doggy in grass"/>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                    Because bulma divides it into columns of 12 segments, is-5 implies a final 1 column segment at the end, mirroring out is-offset-1 from earlier.
+                    Second card that displays stats about the dog, on a scale of 1-5.
+                -->
+                <div class="column is-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title is-centered" id="name">Dog Breed</p>
+                        </div>
+                        <div class="card-content">
+                            <p class="block is-centered is-flex is-justify-content-center">Values: Lowest = 1, Highest = 5</p>
+                            <div class="block">
+                                <ul>
+                                    <li class="block" id="friendly">Friendliness: </li>
+                                    <li class="block" id="playful">Playful: </li>
+                                    <li class="block" id="kids">Kid Friendly: </li>
+                                    <li class="block" id="barking">Barking: </li>
+                                </ul>
+                            </div>
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="block">
+                                        <div class="is-flex is-justify-content-center">
+                                            <button class="button" id="saveButton">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="block">
+                                        <div class="is-flex is-justify-content-center">
+                                            <img src="https://media.discordapp.net/attachments/1166192628619038831/1171597352079994981/DogGroup.jpg?ex=655d420f&is=654acd0f&hm=5cf168873a32aa1d7be28e508066a2ae824f94160aec2598fae71f9743aff507" alt="doggies hanging out" width="320" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                    Third card that will move to next line because is-offset-1 and is-5 equals 6, which would be too much for the previous line.
+                    This card pulls a random dog fact from an API.
+                -->
+                <div class="column is-offset-1 is-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title is-centered">Dog Facts</p>
+                        </div>
+                        <div class="card-content" id="randomDogFacts"></div>
+                    </div>
+                </div>
+                <!--
+                    Fourth card that saves all our previous dog searches into a "list" (not actual html list) of buttons that can be pressed to return the first and second card states to their previous dogs.
+                -->
+                <div class="column is-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title is-centered">Saved Favorites</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="columns">
+                                <div class="buttons column" id="favButtons">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 
+            Footer that aligns to the very bottom of the screen.
+            This works because we set body viewport to 100vh through is-fullheight, while also telling it to behave like a flexbox.
+            Then finally, I tell it to align to the end and set an auto margin-top, which calculates the distance between the end of the main content and the bottom of the page, minus the amount of space needed for the footer to display.
+        -->
+        <footer class="is-align-items-flex-end mt-auto">
+            <p class="has-text-centered">Made by the 🐶 Dog Gang</p>
+        </footer>
+    
+        <!-- jQuery library -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="./assets/js/script.js"></script>
+    </body>
+</html>

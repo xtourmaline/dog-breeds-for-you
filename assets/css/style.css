@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Roboto+Condensed:wght@400;700&display=swap');
+
+/*
+  Variables that set some consistent colors
+*/
+:root {
+    --navy: #190482;
+    --dark: #7752FE;
+    --light: #8E8FFA;
+    --blue: #C2D9FF;
+}
+
+/*
+  Element selectors
+*/
+body {
+    background-color: var(--blue);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+footer, header {
+    background-color: var(--navy);
+    color: white;
+    padding: 20px;
+}
+
+header {
+    font-size: 200%;
+    font-family: "Agbalumo";
+    padding: 20px;
+}
+
+/*
+  Class selectors
+*/
+.button {
+    background-color: var(--light);
+    color: white;
+}
+
+/*
+  Fancy hover and focus effects for all buttons on the page
+*/
+
+.button:focus {
+    background-color: var(--dark);
+    color: white;
+}
+
+.button:hover {
+    background-color: var(--dark);
+    color: white;
+}
+
+.modal-background {
+  background-color: red;
+}
+
+/*
+  ID selectors
+*/
+
+/*
+  Sets width to 100% so it fills up the card, but only for the "favorites" card
+*/
+#favButtons .button {
+    width: 100%;
+}
+
+/*
+  Fancy hover effect specifically for the save button
+*/
+#saveButton {
+    background-color: white;
+    color: var(--light);
+    border: solid;
+}
+
+#saveButton:hover {
+    background-color: var(--light);
+    color: white;
+    border: solid var(--light);
+}
+
+#rel {
+  position: relative;
+  /* width: 50%; */
+}
+
+#modalButton {
+  position: absolute;
+  color: black;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 8px;
+  font-weight: bold;
+  border-radius: 10px;
+  max-width: 450px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  padding-bottom: 10px;
+  right: 570px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: red;
+}
+
+
+/*Media Query*/
+
+@media (max-width: 800px) {
+  /* CSS styles for smaller screens */
+  .modal-content {
+      background-color: white;
+      padding: 8px;
+      border-radius: 10px;
+      max-width: 450px;
+  }
+
+  .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 100px;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+}
+
+@media (max-width: 600px) {
+  /* CSS styles for smaller screens */
+  .modal-content {
+      background-color: white;
+      padding: 8px;
+      border-radius: 10px;
+      max-width: 350px;
+  }
+
+  .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 75px;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+}
+
+
+@media (max-width: 400px) {
+  /* CSS styles for smaller screens */
+  .modal-content {
+      background-color: white;
+      padding: 8px;
+      border-radius: 10px;
+      max-width: 250px;
+  }
+
+  .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+}
